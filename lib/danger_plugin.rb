@@ -211,7 +211,8 @@ module Danger
     def find_swift_files(dir_selected, files = nil, excluded_paths = [], included_paths = [])
       # Assign files to lint
       files = if files.nil?
-                (git.modified_files - git.deleted_files) + git.added_files
+#                (git.modified_files - git.deleted_files) + git.added_files
+                 git.added_files
               else
                 Dir.glob(files)
               end
@@ -340,7 +341,8 @@ module Danger
     # @return [Array] Git diff changes for each file
     def git_modified_files_info()
         modified_files_info = Hash.new
-        updated_files = (git.modified_files - git.deleted_files) + git.added_files
+#         updated_files = (git.modified_files - git.deleted_files) + git.added_files
+        updated_files =  git.added_files
         updated_files.each {|file|
             modified_lines = git_modified_lines(file)
             modified_files_info[File.expand_path(file)] = modified_lines
